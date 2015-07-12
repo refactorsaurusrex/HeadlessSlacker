@@ -23,17 +23,17 @@ namespace HeadlessSlacker
 
         public bool IsRunning()
         {
-            return !GetWindowHandleOrNull().HasValue;
+            return GetWindowHandleOrNull().HasValue;
         }
 
         public Process Start()
         {
             var localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            var slackDirectory = Directory.GetDirectories(localAppData, "*", SearchOption.TopDirectoryOnly).FirstOrDefault(x => x.Equals("slack", StringComparison.OrdinalIgnoreCase));
+            var slackDirectory = Directory.GetDirectories(localAppData, "*", SearchOption.TopDirectoryOnly).FirstOrDefault(x => x.EndsWith("slack", StringComparison.OrdinalIgnoreCase));
             // todo: handle null reference
 
             var slackExecutables = Directory.GetFiles(slackDirectory, "slack.exe", SearchOption.AllDirectories);
-            var currentSlackExe = slackExecutables.OrderByDescending(FileVersionInfo.GetVersionInfo).FirstOrDefault();
+            var currentSlackExe = slackExecutables.OrderByDescending(x => FileVersionInfo.GetVersionInfo(x).FileVersion).FirstOrDefault();
             // todo: handle null reference
 
             return Process.Start(currentSlackExe);
@@ -47,6 +47,8 @@ namespace HeadlessSlacker
 
             var taskbar = (ITaskbarList)new CoTaskbarList();
             taskbar.DeleteTab(handle.Value);
+
+            NativeMethods.ShowWindow(handle.Value, ShowWindowCommands.Minimize);
         }
 
         public void RestoreWindow()
@@ -57,6 +59,8 @@ namespace HeadlessSlacker
 
             var taskbar = (ITaskbarList)new CoTaskbarList();
             taskbar.AddTab(handle.Value);
+
+            NativeMethods.ShowWindow(handle.Value, ShowWindowCommands.Restore);
         }
 
         public void InjectJumpListMenu()
