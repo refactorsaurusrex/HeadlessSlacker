@@ -1,48 +1,57 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.Taskbar;
 
 namespace HeadlessSlacker
 {
-    public class HeadlessSlack
+    public class Slack
     {
-        void RunTrayIcon()
+        static readonly Lazy<Slack> instance = new Lazy<Slack>(() => new Slack());
+
+        public static Slack Instance
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-
-            var form = new SystemTrayForm();
-            form.ShowSlackIcon += form_ShowSlackIcon;
-
-            Application.Run(form);
+            get { return instance.Value; }
         }
 
-        void form_ShowSlackIcon(object sender, EventArgs e)
+        Slack() { }
+
+        public bool IsRunning()
         {
-            RestoreSlackWindow();
-            Application.Exit();
+            return !GetWindowHandleOrNull().HasValue;
         }
 
-        public void MinimizeSlackToTray()
+        public Process Start()
         {
-            IntPtr? handle = GetSlackWindowHandleOrNull();
+            var localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            var slackDirectory = Directory.GetDirectories(localAppData, "*", SearchOption.TopDirectoryOnly).FirstOrDefault(x => x.Equals("slack", StringComparison.OrdinalIgnoreCase));
+            // todo: handle null reference
+
+            var slackExecutables = Directory.GetFiles(slackDirectory, "slack.exe", SearchOption.AllDirectories);
+            var currentSlackExe = slackExecutables.OrderByDescending(FileVersionInfo.GetVersionInfo).FirstOrDefault();
+            // todo: handle null reference
+
+            return Process.Start(currentSlackExe);
+        }
+
+        public void HideWindow()
+        {
+            IntPtr? handle = GetWindowHandleOrNull();
             if (!handle.HasValue)
                 return;
 
             var taskbar = (ITaskbarList)new CoTaskbarList();
             taskbar.DeleteTab(handle.Value);
-            RunTrayIcon();
         }
 
-        public void RestoreSlackWindow()
+        public void RestoreWindow()
         {
-            IntPtr? handle = GetSlackWindowHandleOrNull();
+            IntPtr? handle = GetWindowHandleOrNull();
             if (!handle.HasValue)
                 return;
 
@@ -50,9 +59,9 @@ namespace HeadlessSlacker
             taskbar.AddTab(handle.Value);
         }
 
-        public void InjectHideJumpListItem()
+        public void InjectJumpListMenu()
         {
-            IntPtr? handle = GetSlackWindowHandleOrNull();
+            IntPtr? handle = GetWindowHandleOrNull();
             if (!handle.HasValue)
                 return;
 
@@ -68,7 +77,7 @@ namespace HeadlessSlacker
             jumpList.Refresh();
         }
 
-        IntPtr? GetSlackWindowHandleOrNull()
+        IntPtr? GetWindowHandleOrNull()
         {
             var slackProcess = Process.GetProcesses().FirstOrDefault(x => x.MainWindowTitle.EndsWith("- Slack"));
             if (slackProcess == null)

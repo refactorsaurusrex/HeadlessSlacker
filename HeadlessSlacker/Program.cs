@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using CommandLine;
 
 namespace HeadlessSlacker
@@ -20,20 +22,37 @@ namespace HeadlessSlacker
             // 3) If /h is passed, hide Slack and run the @ tray icon
             // 4) When tray icon is clicked, show Slack and end @ icon
 
-            var options = result.Value;
+            Options options = result.Value;
 
-            var headlessSlack = new HeadlessSlack();
             if (options.Hide)
             {
-                headlessSlack.MinimizeSlackToTray();
+                Slack.Instance.HideWindow();
+
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+
+                var form = new SystemTrayForm();
+                form.ShowSlackIcon += (s, e) =>
+                {
+                    Slack.Instance.RestoreWindow();
+                    Application.Exit();
+                };
+
+                Application.Run(form);
             }
             else if (options.Show)
             {
-                headlessSlack.RestoreSlackWindow();
+                Slack.Instance.RestoreWindow();
             }
             else if (options.InjectJumpList)
             {
-                headlessSlack.InjectHideJumpListItem();
+                if (!Slack.Instance.IsRunning())
+                {
+                    Process slackProcess = Slack.Instance.Start();
+                    slackProcess.WaitForInputIdle(30000);
+                }
+
+                Slack.Instance.InjectJumpListMenu();
             }
         }
     }

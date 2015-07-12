@@ -78,7 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Arguments.cs" />
-    <Compile Include="HeadlessSlack.cs" />
+    <Compile Include="Slack.cs" />
     <Compile Include="ISystemTrayForm.cs" />
     <Compile Include="Options.cs" />
     <Compile Include="SystemTrayForm.cs">
