@@ -45,7 +45,7 @@ namespace HeadlessSlacker
         ShowMaximized = 3,
         /// <summary>
         /// Displays a window in its most recent size and position. This value 
-        /// is similar to <see cref="Win32.ShowWindowCommand.Normal"/>, except 
+        /// is similar to <see cref="ShowWindowCommand.Normal"/>, except 
         /// the window is not activated.
         /// </summary>
         ShowNoActivate = 4,
@@ -90,7 +90,9 @@ namespace HeadlessSlacker
         ForceMinimize = 11
     }
 
-    [ComImport, Guid("56fdf342-fd6d-11d0-958a-006097c9a090"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+    [ComImport]
+    [Guid("56fdf342-fd6d-11d0-958a-006097c9a090")]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface ITaskbarList
     {
         /// <summary>
@@ -125,5 +127,5 @@ namespace HeadlessSlacker
 
     [ComImport]
     [Guid("56fdf344-fd6d-11d0-958a-006097c9a090")]
-    public class CoTaskbarList { }
+    public class TaskbarList { }
 }

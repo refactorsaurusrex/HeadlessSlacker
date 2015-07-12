@@ -45,7 +45,7 @@ namespace HeadlessSlacker
             if (!handle.HasValue)
                 return;
 
-            var taskbar = (ITaskbarList)new CoTaskbarList();
+            var taskbar = (ITaskbarList)new TaskbarList();
             taskbar.DeleteTab(handle.Value);
 
             NativeMethods.ShowWindow(handle.Value, ShowWindowCommands.Minimize);
@@ -57,7 +57,7 @@ namespace HeadlessSlacker
             if (!handle.HasValue)
                 return;
 
-            var taskbar = (ITaskbarList)new CoTaskbarList();
+            var taskbar = (ITaskbarList)new TaskbarList();
             taskbar.AddTab(handle.Value);
 
             NativeMethods.ShowWindow(handle.Value, ShowWindowCommands.Restore);
