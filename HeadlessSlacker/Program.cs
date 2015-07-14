@@ -29,20 +29,8 @@ namespace HeadlessSlacker
                 Application.SetCompatibleTextRenderingDefault(false);
 
                 var form = new SystemTrayForm();
-                form.ShowSlackIcon += (s, e) =>
-                {
-                    Slack.Instance.RestoreWindow();
-                    Application.Exit();
-                };
-
+                form.ShowSlackIcon += form_ShowSlackIcon;
                 Application.Run(form);
-            }
-            else if (options.Show)
-            {
-                if (!Slack.Instance.IsRunning())
-                    Slack.Instance.Start();
-
-                Slack.Instance.RestoreWindow();
             }
             else
             {
@@ -51,6 +39,21 @@ namespace HeadlessSlacker
 
                 Slack.Instance.InjectJumpListMenu();
             }
+        }
+
+        static void form_ShowSlackIcon(object sender, EventArgs e)
+        {
+            if (Slack.Instance.IsRunning())
+            {
+                Slack.Instance.RestoreWindow();
+            }
+            else
+            {
+                Slack.Instance.Start();
+                Slack.Instance.InjectJumpListMenu();
+            }
+
+            Application.Exit();
         }
     }
 }

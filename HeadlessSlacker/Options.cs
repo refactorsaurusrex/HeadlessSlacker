@@ -9,9 +9,6 @@ namespace HeadlessSlacker
 {
     public class Options
     {
-        [Option('s', longName: "show")]
-        public bool Show { get; set; }
-
         [Option('h', longName: "hide")]
         public bool Hide { get; set; }
     }
