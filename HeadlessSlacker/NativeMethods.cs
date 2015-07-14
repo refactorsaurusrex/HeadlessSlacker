@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -9,7 +10,7 @@ namespace HeadlessSlacker
 {
     public static class NativeMethods
     {
-        // todo: add wrapper class that doesn't require the first parameter and hide this 
+        // todo: add wrapper class that doesn't require the first parameter and hide this signature
         [DllImport("user32.dll", SetLastError = true)]
         public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 
@@ -38,7 +39,7 @@ namespace HeadlessSlacker
         /// <summary>
         /// Maximizes the specified window.
         /// </summary>
-        Maximize = 3, // is this the right value?
+        Maximize = 3, 
         /// <summary>
         /// Activates the window and displays it as a maximized window.
         /// </summary>       
@@ -125,7 +126,21 @@ namespace HeadlessSlacker
         int SetActiveAlt([In] IntPtr hWnd);
     }
 
+    public class WindowsTaskBar
+    {
+        static readonly Lazy<ITaskbarList> instance = new Lazy<ITaskbarList>(() => (ITaskbarList)new TaskbarList());
+
+        public static ITaskbarList Instance
+        {
+            get { return instance.Value; }
+        }
+
+        WindowsTaskBar() { }
+    }
+
     [ComImport]
     [Guid("56fdf344-fd6d-11d0-958a-006097c9a090")]
-    public class TaskbarList { }
+    [Browsable(false)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    class TaskbarList { }
 }
