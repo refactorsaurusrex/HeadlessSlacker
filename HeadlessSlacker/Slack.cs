@@ -78,7 +78,7 @@ namespace HeadlessSlacker
 
             var hideCommand = new JumpListLink(cmdPath, "Hide Taskbar Icon")
             {
-                Arguments = Arguments.Hide,
+                Arguments = "/h",
                 IconReference = new IconReference(cmdPath, 0)
             };
             

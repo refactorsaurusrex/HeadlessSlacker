@@ -83,7 +83,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Arguments.cs" />
     <Compile Include="Slack.cs" />
     <Compile Include="ISystemTrayForm.cs" />
     <Compile Include="Options.cs" />

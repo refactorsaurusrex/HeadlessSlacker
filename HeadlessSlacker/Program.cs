@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CommandLine;
@@ -40,7 +38,7 @@ namespace HeadlessSlacker
             {
                 Slack.Instance.RestoreWindow();
             }
-            else if (options.InjectJumpList)
+            else
             {
                 if (!Slack.Instance.IsRunning())
                     Slack.Instance.Start();
