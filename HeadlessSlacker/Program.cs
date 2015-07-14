@@ -20,6 +20,9 @@ namespace HeadlessSlacker
 
             if (options.Hide)
             {
+                if (!Slack.Instance.IsRunning())
+                    return;
+
                 Slack.Instance.HideWindow();
 
                 Application.EnableVisualStyles();
@@ -36,6 +39,9 @@ namespace HeadlessSlacker
             }
             else if (options.Show)
             {
+                if (!Slack.Instance.IsRunning())
+                    Slack.Instance.Start();
+
                 Slack.Instance.RestoreWindow();
             }
             else
