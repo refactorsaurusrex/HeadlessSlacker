@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.WindowsAPICodePack.Shell;
 using Microsoft.WindowsAPICodePack.Taskbar;
 
 namespace HeadlessSlacker
@@ -26,7 +27,7 @@ namespace HeadlessSlacker
             return GetWindowHandleOrNull().HasValue;
         }
 
-        public Process Start()
+        public void Start()
         {
             var localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             var slackDirectory = Directory.GetDirectories(localAppData, "*", SearchOption.TopDirectoryOnly).FirstOrDefault(x => x.EndsWith("slack", StringComparison.OrdinalIgnoreCase));
@@ -36,7 +37,12 @@ namespace HeadlessSlacker
             var currentSlackExe = slackExecutables.OrderByDescending(x => FileVersionInfo.GetVersionInfo(x).FileVersion).FirstOrDefault();
             // todo: handle null reference
 
-            return Process.Start(currentSlackExe);
+            Process.Start(currentSlackExe);
+
+            while (!IsRunning())
+            {
+                Task.Delay(3000).Wait();
+            }
         }
 
         public void HideWindow()
@@ -45,9 +51,7 @@ namespace HeadlessSlacker
             if (!handle.HasValue)
                 return;
 
-            var taskbar = (ITaskbarList)new TaskbarList();
-            taskbar.DeleteTab(handle.Value);
-
+            WindowsTaskBar.Instance.DeleteTab(handle.Value);
             NativeMethods.ShowWindow(handle.Value, ShowWindowCommands.Minimize);
         }
 
@@ -57,9 +61,7 @@ namespace HeadlessSlacker
             if (!handle.HasValue)
                 return;
 
-            var taskbar = (ITaskbarList)new TaskbarList();
-            taskbar.AddTab(handle.Value);
-
+            WindowsTaskBar.Instance.AddTab(handle.Value);
             NativeMethods.ShowWindow(handle.Value, ShowWindowCommands.Restore);
         }
 
@@ -69,12 +71,17 @@ namespace HeadlessSlacker
             if (!handle.HasValue)
                 return;
 
-            var jumpList = JumpList.CreateJumpListForIndividualWindow("headless-slacker", handle.Value);
-
-            var category = new JumpListCustomCategory("Tasks");
             string cmdPath = Assembly.GetEntryAssembly().Location;
 
-            var hideCommand = new JumpListLink(cmdPath, "Hide") { Arguments = Arguments.Hide };
+            var jumpList = JumpList.CreateJumpListForIndividualWindow("headless-slacker", handle.Value);
+            var category = new JumpListCustomCategory("Headless Slack");
+
+            var hideCommand = new JumpListLink(cmdPath, "Hide Taskbar Icon")
+            {
+                Arguments = Arguments.Hide,
+                IconReference = new IconReference(cmdPath, 0)
+            };
+            
             category.AddJumpListItems(hideCommand);
 
             jumpList.AddCustomCategories(category);

@@ -43,11 +43,7 @@ namespace HeadlessSlacker
             else if (options.InjectJumpList)
             {
                 if (!Slack.Instance.IsRunning())
-                {
-                    Process slackProcess = Slack.Instance.Start();
-                    Thread.Sleep(15000); // todo: Poll for the window handle every 3 seconds.
-                    slackProcess.WaitForInputIdle(30000);
-                }
+                    Slack.Instance.Start();
 
                 Slack.Instance.InjectJumpListMenu();
             }
