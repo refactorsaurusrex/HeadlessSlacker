@@ -39,9 +39,14 @@ namespace HeadlessSlacker
 
             Process.Start(currentSlackExe);
 
+            int failCount = 0;
             while (!IsRunning())
             {
+                failCount++;
                 Task.Delay(3000).Wait();
+
+                if (failCount >= 20)
+                    throw new InvalidOperationException("Failed to start Slack.");
             }
         }
 
