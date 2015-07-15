@@ -31,11 +31,15 @@ namespace HeadlessSlacker
         {
             var localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             var slackDirectory = Directory.GetDirectories(localAppData, "*", SearchOption.TopDirectoryOnly).FirstOrDefault(x => x.EndsWith("slack", StringComparison.OrdinalIgnoreCase));
-            // todo: handle null reference
 
+            if (slackDirectory == null)
+                return; // todo: log error
+            
             var slackExecutables = Directory.GetFiles(slackDirectory, "slack.exe", SearchOption.AllDirectories);
             var currentSlackExe = slackExecutables.OrderByDescending(x => FileVersionInfo.GetVersionInfo(x).FileVersion).FirstOrDefault();
-            // todo: handle null reference
+
+            if (currentSlackExe == null)
+                return; // todo: handle null reference
 
             Process.Start(currentSlackExe);
 

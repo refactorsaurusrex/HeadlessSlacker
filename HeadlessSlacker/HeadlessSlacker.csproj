@@ -60,10 +60,11 @@
     <ApplicationIcon>headless-slack.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>5216D2E67494E8E7F38C943D7B2CBE1C524CD4EC</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>3284C7181FC8D784FD43E464590F9FFF0B9E3CE0</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>HeadlessSlacker_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>
+    </ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -112,7 +113,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="HeadlessSlacker_TemporaryKey.pfx" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
