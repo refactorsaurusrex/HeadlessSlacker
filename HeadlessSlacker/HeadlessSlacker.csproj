@@ -27,7 +27,7 @@
     <SupportUrl>https://github.com/refactorsaurusrex/HeadlessSlacker</SupportUrl>
     <ProductName>Headless Slack</ProductName>
     <PublisherName>Nick Spreitzer</PublisherName>
-    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationRevision>2</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
