@@ -14,7 +14,7 @@ Headless Slack allows you to escape the oppressive orange flashing (<-- dramatic
 
 - [Click here](https://github.com/refactorsaurusrex/HeadlessSlacker/raw/master/HeadlessSlacker/publish/setup.exe) to install the application. (Windows only.)
 
-- When the application is run, it checks to see if Slack is running. If not, it starts Slack. Once Slack is running, a jump list menu item is added to Slack that says "Hide Taskbar Icon". Clicking this will remove the Slack window from the tasbar and run Headless Slack in the background, shown as a red "@" symbol in the system tray.
+- When the application is run, it checks to see if Slack is running. If not, it starts Slack. Once Slack is running, a jump list menu item is added to Slack that says "Hide Taskbar Icon". Clicking this will remove the Slack window from the taskbar and run Headless Slack in the background, shown as a red "@" symbol in the system tray.
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/refactorsaurusrex/HeadlessSlacker/master/Images/HeadlessSlackJumpList.png" />
