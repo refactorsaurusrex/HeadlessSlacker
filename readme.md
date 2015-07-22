@@ -4,7 +4,7 @@
 
 ## Hacking Slack For Windows
 
-Version 1.1.5 of Slack's Windows application introduced two changes with the goal of ensuring that users never missed any incoming messages: First, minimizing to the system tray was disabled; second, incoming notifications caused the taskbar icon to flash - and then remain - orange. It sounds like a significant number of users were [chronically missing notifications](https://slack-files.com/T024BE7LD-F04DKJP9R-a61c0f491c), so I can certainly appreciate why Slack introduced these modifications. That said, I do wish they had been introduced as *optional* features. Between desktop notifications, the subtle - but very real - system tray icon change when you have unread messages, and mobile notifications, I personally never found myself missing important messages.
+Version 1.1.5 of Slack's Windows application disallowed minimizing to the system tray. The change was made with the goal of ensuring that users never missed any incoming messages. It sounds like a significant number of users were [chronically missing notifications](https://slack-files.com/T024BE7LD-F04DKJP9R-a61c0f491c), so I can certainly appreciate why Slack introduced these modifications. That said, I do wish they had been introduced as *optional* features. Between desktop notifications, the subtle - but very real - system tray icon change when you have unread messages, and mobile notifications, I personally never found myself missing important messages. The inability to minimize to the tray also meant having no escape from the flashing orange taskbar icon that comes along with each message, which I find distracting and visually jarring.
 
 And so I decided to throw this little workaround together...
 
