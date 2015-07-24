@@ -8,13 +8,13 @@ Version 1.1.5 of Slack's Windows application disallowed minimizing to the system
 
 And so I decided to throw this little workaround together...
 
-## Headless Slack: Installation & Usage
+## Headless Slacker: Installation & Usage
 
-Headless Slack allows you to escape the oppressive orange flashing (<-- dramatic!) by *optionally* hiding the Slack taskbar icon altogether. Once it's installed, right-click the Slack taskbar icon and select "Hide Taskbar Icon". To unhide, click the red "@" icon floating around in your system tray. (The Headless Slack icon.)
+Headless Slacker allows you to escape the oppressive orange flashing (<-- dramatic!) by *optionally* hiding the Slack taskbar icon altogether. Once it's installed, right-click the Slack taskbar icon and select "Hide Taskbar Icon". To unhide, click the red "@" icon floating around in your system tray. (The Headless Slacker icon.)
 
 - [Click here](https://github.com/refactorsaurusrex/HeadlessSlacker/raw/master/HeadlessSlacker/publish/setup.exe) to install the application. (Windows only.)
 
-- When the application is run, it checks to see if Slack is running. If not, it starts Slack. Once Slack is running, a jump list menu item is added to Slack that says "Hide Taskbar Icon". Clicking this will remove the Slack window from the taskbar and run Headless Slack in the background, shown as a red "@" symbol in the system tray.
+- When the application is run, it checks to see if Slack is running. If not, it starts Slack. Once Slack is running, a jump list menu item is added to Slack that says "Hide Taskbar Icon". Clicking this will remove the Slack window from the taskbar and run Headless Slacker in the background, shown as a red "@" symbol in the system tray.
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/refactorsaurusrex/HeadlessSlacker/master/Images/HeadlessSlackJumpList.png" />
@@ -26,4 +26,4 @@ Headless Slack allows you to escape the oppressive orange flashing (<-- dramatic
 <img src="https://raw.githubusercontent.com/refactorsaurusrex/HeadlessSlacker/master/Images/HeadlessSlackTrayIcon.png" />
 </p>
 
-- If you quit Slack entirely while Headless Slack is running, you can click the "@" system tray icon to restart and show Slack.
+- If you quit Slack entirely while Headless Slacker is running, you can click the "@" system tray icon to restart and show Slack.
