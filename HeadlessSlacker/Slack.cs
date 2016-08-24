@@ -99,7 +99,7 @@ namespace HeadlessSlacker
 
         IntPtr? GetWindowHandleOrNull()
         {
-            var slackProcess = Process.GetProcesses().FirstOrDefault(x => x.MainWindowTitle.EndsWith("- Slack"));
+            var slackProcess = Process.GetProcesses().FirstOrDefault(x => x.MainWindowTitle.StartsWith("Slack - "));
             if (slackProcess == null)
                 return null;
 
